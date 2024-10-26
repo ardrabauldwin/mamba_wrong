@@ -1,0 +1,22 @@
+#!/bin/bash
+
+#SBATCH -J first_code_job
+#SBATCH -A project02409
+#SBATCH -e /work/scratch/jw95jepu/firstinf/%x.err.%j
+#SBATCH -o /work/scratch/jw95jepu/firstinf/%x.out.%j
+#SBATCH --mem-per-cpu=3800
+#SBATCH -t 24:00:00
+#SBATCH -n 1
+#SBATCH --gres=gpu
+#SBATCH -c 48
+module purge
+module load gcc python cuda
+cd /home/jw95jepu/env/myCode
+source firstenv/bin/activate
+python train.py
+EXITSTATUS=$?
+deactivate
+exit $EXITSTATUS
+
+
+
